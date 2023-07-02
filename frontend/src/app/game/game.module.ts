@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameControlComponent } from './game-control/game-control.component';
 import { GameComponent } from './game/game.component';
 import { GameControlSwitchComponent } from './game-control-switch/game-control-switch.component';
+import {GameRoutingModule} from './game-routing.module';
 
 
 
@@ -13,7 +14,8 @@ import { GameControlSwitchComponent } from './game-control-switch/game-control-s
     GameControlSwitchComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    GameRoutingModule
   ]
 })
 export class GameModule { }
