@@ -1,0 +1,18 @@
+@import "../../../sass/variables";
+
+.rps-game-control {
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  padding-bottom: 100%;
+  background-color: map-get($deep-orange, "base");
+  border-radius: 10px;
+}
+
+.rps-game-control__icon {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+}
