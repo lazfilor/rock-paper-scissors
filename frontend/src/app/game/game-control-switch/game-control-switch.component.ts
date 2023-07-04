@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {GameControl} from '../../shared/game-control';
 
 @Component({
   selector: 'rps-game-control-switch',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class GameControlSwitchComponent {
 
+  @Input({required: true})
+  gameControls: GameControl[] = [];
+
+  printSelected(e: GameControl) {
+    window.alert(JSON.stringify(e));
+  }
 }

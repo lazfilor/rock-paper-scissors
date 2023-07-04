@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {GameControl} from '../../shared/game-control';
 
 @Component({
   selector: 'rps-game-control',
@@ -8,14 +9,20 @@ import {Component, Input} from '@angular/core';
 export class GameControlComponent {
 
   @Input()
-  public controlId?: string;
+  controlId?: string;
 
   @Input()
-  public controlName?: string;
+  controlName?: string;
 
   @Input()
-  public isControlHidden: boolean = false;
+  controlAssetUrl?: string;
 
-  @Input()
-  public controlAssetUrl?: string;
+  @Output() controlSelectEvent = new EventEmitter<GameControl>();
+
+  selectControl() {
+
+    if (this.controlId !== undefined && this.controlName !== undefined && this.controlAssetUrl !== undefined) {
+      this.controlSelectEvent.emit({id: this.controlId, name: this.controlName, assetPath: this.controlAssetUrl});
+    }
+  }
 }

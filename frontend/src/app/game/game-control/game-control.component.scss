@@ -10,6 +10,12 @@
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 10%;
+  transition: transform 0.25s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
 }
 
 .rps-game-control__icon-box {

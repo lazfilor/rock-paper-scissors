@@ -1,8 +1,8 @@
-<div class="rps-game-control">
+<div class="rps-game-control" (click)="selectControl()">
   <div class="rps-game-control__icon-box">
-    <img class="rps-game-control__icon" ngSrc="assets/controls/rock.svg" width="800" height="800" >
+    <img class="rps-game-control__icon" [ngSrc]="'assets' + controlAssetUrl" width="800" height="800" [alt]="controlId">
   </div>
-  <h3 class="rps-game-control__text">Rock</h3>
+  <h3 class="rps-game-control__text">{{controlName}}</h3>
 </div>
 
 

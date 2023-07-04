@@ -1,1 +1,7 @@
-<p>game-control-switch works!</p>
+<div class="rps-game-control-switch">
+  <rps-game-control *ngFor="let control of gameControls"
+                    [controlName]="control.name"
+                    [controlId]="control.id"
+                    [controlAssetUrl]="control.assetPath"
+                    (controlSelectEvent)="printSelected($event)"/>
+</div>
