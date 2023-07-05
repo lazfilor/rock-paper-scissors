@@ -1,12 +1,29 @@
 @import "../../../sass/variables";
 
 .rps-game-control {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
+  background-color: transparent;
+  perspective: 1000px;
+}
+
+.rps-game-control__inner {
+  position: relative;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  //Rotation must happen here
+}
+
+.rps-game-control__front-slide,
+.rps-game-control__back-slide {
+  backface-visibility: hidden;
   background-color: map-get($blue-grey, "lighten-5");
   border-radius: 5%;
   border: 1px solid black;
+}
+
+.rps-game-control__front-slide {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 10%;
@@ -16,6 +33,15 @@
     transform: scale(1.05);
     cursor: pointer;
   }
+}
+
+.rps-game-control__back-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform: rotateY(180deg);
 }
 
 .rps-game-control__icon-box {
