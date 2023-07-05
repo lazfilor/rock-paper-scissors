@@ -1,7 +1,5 @@
 <div class="rps-game-control-switch">
   <rps-game-control *ngFor="let control of gameControls"
-                    [controlName]="control.name"
-                    [controlId]="control.id"
-                    [controlAssetUrl]="control.assetPath"
+                    [controlData]="control"
                     (controlSelectEvent)="printSelected($event)"/>
 </div>

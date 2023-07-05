@@ -1,8 +1,8 @@
 <div class="rps-game-control" (click)="selectControl()">
   <div class="rps-game-control__icon-box">
-    <img class="rps-game-control__icon" [ngSrc]="'assets' + controlAssetUrl" width="800" height="800" [alt]="controlId">
+    <img class="rps-game-control__icon" [ngSrc]="'assets' + controlData?.assetPath" width="800" height="800" [alt]="controlData?.id">
   </div>
-  <h3 class="rps-game-control__text">{{controlName}}</h3>
+  <h3 class="rps-game-control__text">{{controlData?.name}}</h3>
 </div>
 
 
