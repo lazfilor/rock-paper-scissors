@@ -49,6 +49,17 @@
   height: 100%;
   width: 100%;
   transform: rotateY(180deg);
+
+  &::before {
+    content: 'videogame_asset';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Material Icons';
+    font-size: 9rem;
+    color: map-get($blue, "lighten-2");
+  }
 }
 
 .rps-game-control__icon-box {

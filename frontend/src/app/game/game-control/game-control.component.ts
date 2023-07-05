@@ -9,7 +9,7 @@ import {GameControl} from '../../shared/game-control';
 export class GameControlComponent implements OnInit{
 
   @Input()
-  controlData?: GameControl;
+  controlData: GameControl = {id: 'hidden', name: 'Hidden', assetPath: ''};
 
   @Output() controlSelectEvent = new EventEmitter<GameControl>();
 
@@ -17,7 +17,7 @@ export class GameControlComponent implements OnInit{
 
   ngOnInit(): void {
 
-    if (this.controlData) {
+    if (this.controlData?.assetPath) {
       this.isRevealed = true;
     }
   }

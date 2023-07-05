@@ -1,14 +1,13 @@
 <div class="rps-game-control" (click)="selectControl()" [ngClass]="{'rps-game-control--hidden': !isRevealed}">
   <div class="rps-game-control__inner">
     <div class="rps-game-control__front-slide">
-      <div *ngIf="controlData" class="rps-game-control__icon-box">
-        <img class="rps-game-control__icon" [ngSrc]="'assets' + controlData?.assetPath" width="800" height="800" [alt]="controlData?.id">
+      <div class="rps-game-control__icon-box">
+        <img *ngIf="controlData?.assetPath" class="rps-game-control__icon" [ngSrc]="'assets' + controlData.assetPath" width="800" height="800" [alt]="controlData.id">
       </div>
-      <h3 class="rps-game-control__text">{{controlData?.name}}</h3>
+      <h3 class="rps-game-control__text">{{controlData.name}}</h3>
 
     </div>
     <div class="rps-game-control__back-slide">
-      <!-- INSERT BACKSIDE OF CARD -->
     </div>
   </div>
 </div>
