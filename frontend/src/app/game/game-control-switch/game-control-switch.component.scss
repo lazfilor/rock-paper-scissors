@@ -1,11 +1,5 @@
 .rps-game-control-switch {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: stretch;
-  align-items: flex-start;
-  column-gap: 5%;
-
-  > * {
-    flex-grow: 1;
-  }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 5%;
 }
