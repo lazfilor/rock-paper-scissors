@@ -16,7 +16,10 @@ export class GameControlComponent implements OnInit{
   isRevealed: boolean = false;
 
   ngOnInit(): void {
-    //set isRevealed in case data is not default on start
+
+    if (this.controlData) {
+      this.isRevealed = true;
+    }
   }
 
 
@@ -46,7 +49,7 @@ export class GameControlComponent implements OnInit{
 
   selectControl() {
 
-    if (this.isRevealed) {
+    if (this.isRevealed && this.controlData) {
       this.controlSelectEvent.emit(this.controlData);
     }
   }

@@ -3,6 +3,13 @@
 .rps-game-control {
   background-color: transparent;
   perspective: 1000px;
+
+  &--hidden {
+
+    .rps-game-control__inner {
+      transform: rotateY(180deg);
+    }
+  }
 }
 
 .rps-game-control__inner {
