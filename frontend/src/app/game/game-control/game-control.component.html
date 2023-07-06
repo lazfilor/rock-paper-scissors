@@ -1,4 +1,5 @@
-<div class="rps-game-control" (click)="selectControl()" [ngClass]="{'rps-game-control--hidden': !isRevealed}">
+<div class="rps-game-control" (click)="clickControl()"
+     [ngClass]="{'rps-game-control--hidden': !isRevealed, 'rps-game-control--selected': isSelected}">
   <div class="rps-game-control__inner">
     <div class="rps-game-control__front-slide">
       <div class="rps-game-control__icon-box">

@@ -11,6 +11,9 @@ export class GameControlComponent implements OnInit{
   @Input()
   controlData: GameControl = {id: 'hidden', name: 'Hidden', assetPath: ''};
 
+  @Input()
+  isSelected = false;
+
   @Output() controlSelectEvent = new EventEmitter<GameControl>();
 
   isRevealed: boolean = false;
@@ -29,10 +32,6 @@ export class GameControlComponent implements OnInit{
    */
   reveal(data?: GameControl) {
 
-    if (this.isRevealed) {
-      return;
-    }
-
     if (data) {
       this.controlData = data;
     }
@@ -40,20 +39,34 @@ export class GameControlComponent implements OnInit{
   }
 
   /**
-   * Hides current data from the user
+   * Hides control from the user and unselects it
    */
   hide() {
-
-    if (!this.isRevealed) {
-      return;
-    }
     this.isRevealed = false;
+    this.isSelected = false;
   }
 
-  selectControl() {
+  /**
+   * Sends click event to parents only in case it has available data to provide
+   */
+  clickControl() {
 
     if (this.isRevealed && this.controlData) {
       this.controlSelectEvent.emit(this.controlData);
     }
+  }
+
+  /**
+   * Unselects control without hiding it
+   */
+  unselect() {
+    this.isSelected = false;
+  }
+
+  /**
+   * Selects control
+   */
+  select() {
+    this.isSelected = true;
   }
 }

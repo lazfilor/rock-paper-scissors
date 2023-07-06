@@ -10,6 +10,13 @@
       transform: rotateY(180deg);
     }
   }
+
+  &--selected {
+
+    .rps-game-control__front-slide:hover {
+      cursor: auto;
+    }
+  }
 }
 
 .rps-game-control__inner {

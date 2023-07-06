@@ -23,8 +23,14 @@ export class GameControlSwitchComponent {
    */
   reset() {
     this.controlsComponents
-      .filter(c => !c.isRevealed)
-      .forEach(c => c.reveal())
+      .forEach(c => {
+
+        if (c.isRevealed) {
+          c.unselect();
+        } else {
+          c.reveal();
+        }
+      })
     this.hasSelection = false;
   }
 
@@ -40,8 +46,15 @@ export class GameControlSwitchComponent {
     }
     this.selectEmitter.emit(e);
     this.controlsComponents
-      .filter(c => c.isRevealed && c.controlData.id !== e.id)
-      .forEach(c => c.hide());
+      .filter(c => c.isRevealed)
+      .forEach(c => {
+
+        if (c.controlData.id === e.id) {
+          c.select()
+        } else {
+          c.hide();
+        }
+      });
     this.hasSelection = true;
   }
 }
