@@ -1,5 +1,6 @@
 <div class="rps-game-control-switch">
   <rps-game-control *ngFor="let control of gameControls"
                     [controlData]="control"
-                    (controlSelectEvent)="printSelected($event)"/>
+                    (controlSelectEvent)="handleSelect($event)"
+                    #control/>
 </div>

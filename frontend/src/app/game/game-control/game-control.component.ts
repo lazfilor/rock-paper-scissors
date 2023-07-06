@@ -24,15 +24,18 @@ export class GameControlComponent implements OnInit{
 
 
   /**
-   * Reveals new data to the user in case none had existed before
-   * @param data the new data that should be revealed
+   * Reveals control to the user, may also add new data in case it did not exist before
+   * @param [data] the new data that should be revealed
    */
-  reveal(data: GameControl) {
+  reveal(data?: GameControl) {
 
-    if (this.isRevealed || !data) {
+    if (this.isRevealed) {
       return;
     }
-    this.controlData = data;
+
+    if (data) {
+      this.controlData = data;
+    }
     this.isRevealed = true;
   }
 
