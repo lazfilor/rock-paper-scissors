@@ -11,10 +11,23 @@
     }
   }
 
-  &--selected {
+  &--selected,
+  &--server-controlled {
 
     .rps-game-control__front-slide:hover {
+      transform: scale(1);
       cursor: auto;
+    }
+  }
+
+  &--server-controlled {
+
+    .rps-game-control__icon-box {
+      background-color: map-get($deep-orange, "base");
+    }
+
+    .rps-game-control__back-slide::before {
+      color: map-get($deep-orange, "base");
     }
   }
 }

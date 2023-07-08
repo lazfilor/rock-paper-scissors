@@ -14,6 +14,9 @@ export class GameControlComponent implements OnInit{
   @Input()
   isSelected = false;
 
+  @Input()
+  isServerControl: boolean = false;
+
   @Output() controlSelectEvent = new EventEmitter<GameControl>();
 
   isRevealed: boolean = false;
@@ -51,7 +54,7 @@ export class GameControlComponent implements OnInit{
    */
   clickControl() {
 
-    if (this.isRevealed && this.controlData) {
+    if (this.isRevealed && this.controlData && !this.isServerControl) {
       this.controlSelectEvent.emit(this.controlData);
     }
   }

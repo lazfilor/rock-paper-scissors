@@ -1,4 +1,4 @@
-<div class="rps-game-control-switch">
+<div class="rps-game-control-switch" [ngClass]="{'rps-game-control-switch--unselected': !hasSelection}">
   <rps-game-control *ngFor="let control of gameControls"
                     [controlData]="control"
                     (controlSelectEvent)="handleSelect($event)"

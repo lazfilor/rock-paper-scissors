@@ -1,5 +1,17 @@
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  80% { transform: rotate(0deg); }
+  85% { transform: rotate(4deg); }
+  95% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
 .rps-game-control-switch {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 5%;
+
+  &--unselected {
+    animation: wiggle 2s infinite;
+  }
 }

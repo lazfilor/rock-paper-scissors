@@ -1,0 +1,10 @@
+@import "../../../sass/variables";
+
+.rps-game__server-area {
+
+  @media #{$extra-large-and-up} {
+    padding: 0 15%;
+  }
+}
+
+

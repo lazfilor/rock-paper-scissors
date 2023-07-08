@@ -1,3 +1,14 @@
 <h2>Game</h2>
 
-<rps-game-control-switch [gameControls]="controls"/>
+<div class="rps-game">
+  <div class="rps-game__server-area row">
+    <div class="rps-game__server-control-area col m4 offset-m4">
+      <rps-game-control  [isServerControl]="true" />
+    </div>
+  </div>
+  <div class="rps-game__player-area row">
+    <div class="rps-game__player-control-area col l10 offset-l1 m12">
+      <rps-game-control-switch [gameControls]="controls"/>
+    </div>
+  </div>
+</div>
