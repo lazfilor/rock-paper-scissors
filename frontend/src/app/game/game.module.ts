@@ -4,6 +4,7 @@ import { GameControlComponent } from './game-control/game-control.component';
 import { GameComponent } from './game/game.component';
 import { GameControlSwitchComponent } from './game-control-switch/game-control-switch.component';
 import {GameRoutingModule} from './game-routing.module';
+import { GameReviewModalComponent } from './game-review-modal/game-review-modal.component';
 
 
 
@@ -11,7 +12,8 @@ import {GameRoutingModule} from './game-routing.module';
   declarations: [
     GameControlComponent,
     GameComponent,
-    GameControlSwitchComponent
+    GameControlSwitchComponent,
+    GameReviewModalComponent
   ],
   imports: [
     CommonModule,

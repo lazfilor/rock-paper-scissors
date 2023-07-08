@@ -1,0 +1,10 @@
+<div class="rps-game-review-modal" [ngClass]="{'rps-game-review-modal--is-visible': isVisible}">
+  <div class="rps-game-review-modal__content-area">
+    <h4 *ngIf="hasWon !== undefined">{{ hasWon ? 'You Won!' : 'You Lost!' }}</h4>
+    <h5 *ngIf="serverMove && playerMove">{{playerMove.name}} vs. {{serverMove.name}}</h5>
+    <div class="rps-game-review-modal__user-action">
+      <a (click)="playAgain()" class="waves-effect waves-light deep-orange accent-3 btn">Play again</a>
+      <a (click)="backToHome()" class="waves-effect waves-light deep-orange accent-3 btn">Back to home</a>
+    </div>
+  </div>
+</div>
