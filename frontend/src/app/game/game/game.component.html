@@ -3,14 +3,14 @@
 <div class="rps-game">
   <div class="rps-game__server-area row">
     <div class="rps-game__server-control-area col m4 offset-m4">
-      <rps-game-control  [isServerControl]="true" />
+      <rps-game-control [isServerControl]="true" #serverControl/>
     </div>
   </div>
   <div class="rps-game__player-area row">
     <div class="rps-game__player-control-area col l10 offset-l1 m12">
-      <rps-game-control-switch [gameControls]="controls"/>
+      <rps-game-control-switch (selectEvent)="handleSwitchSelection($event)" #controlSwitch/>
     </div>
   </div>
 </div>
 
-<rps-game-review-modal #review/>
+<rps-game-review-modal (playAgainEvent)="handleUserRematch($event)" #review/>

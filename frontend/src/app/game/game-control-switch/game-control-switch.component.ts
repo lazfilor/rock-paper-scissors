@@ -1,22 +1,26 @@
-import {Component, EventEmitter, Input, Output, QueryList, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {GameControl} from '../../shared/game-control';
 import {GameControlComponent} from '../game-control/game-control.component';
+import {gameConfiguration} from '../../shared/game-configuration';
 
 @Component({
   selector: 'rps-game-control-switch',
   templateUrl: './game-control-switch.component.html',
   styleUrls: ['./game-control-switch.component.scss']
 })
-export class GameControlSwitchComponent {
+export class GameControlSwitchComponent implements OnInit {
 
-  @Input({required: true})
   gameControls: GameControl[] = [];
 
-  @Output() selectEmitter: EventEmitter<GameControl> = new EventEmitter<GameControl>();
+  @Output() selectEvent: EventEmitter<GameControl> = new EventEmitter<GameControl>();
 
   hasSelection: boolean = false;
 
   @ViewChildren('control') controlsComponents!: QueryList<GameControlComponent>;
+
+  ngOnInit(): void {
+    this.gameControls = gameConfiguration.controls;
+  }
 
   /**
    * Resets switch and makes it accept new selections
@@ -44,7 +48,7 @@ export class GameControlSwitchComponent {
       //do not allow subsequent selections in case selection was already made and is being processed by parent
       return;
     }
-    this.selectEmitter.emit(e);
+    this.selectEvent.emit(e);
     this.controlsComponents
       .filter(c => c.isRevealed)
       .forEach(c => {

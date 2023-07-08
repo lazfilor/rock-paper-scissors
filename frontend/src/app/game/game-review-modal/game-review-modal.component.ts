@@ -8,7 +8,7 @@ import {GameControl} from '../../shared/game-control';
 })
 export class GameReviewModalComponent {
 
-  @Output() playAgainEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() playAgainEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   isVisible: boolean = false;
 
@@ -16,18 +16,18 @@ export class GameReviewModalComponent {
 
   serverMove?: GameControl;
 
-  hasWon?: boolean;
+  hasPlayerWon?: boolean;
 
   /**
    * Calling this method displays a modal including the respective data
    * @param playerMove the user's move's data
    * @param serverMove the server's move's data
-   * @param hasWon whether the user has won or not
+   * @param hasPlayerWon whether the user has won or not
    */
-  show(playerMove: GameControl, serverMove: GameControl, hasWon: boolean ) {
+  show(playerMove: GameControl, serverMove: GameControl, hasPlayerWon: boolean ) {
     this.playerMove = playerMove;
     this.serverMove = serverMove;
-    this.hasWon = hasWon;
+    this.hasPlayerWon = hasPlayerWon;
     this.isVisible = true;
   }
 
@@ -38,20 +38,20 @@ export class GameReviewModalComponent {
     this.isVisible = false;
     this.playerMove = undefined;
     this.serverMove = undefined;
-    this.hasWon = undefined;
+    this.hasPlayerWon = undefined;
   }
 
   /**
    * Calling this method indicates the user's willingness for a rematch via the playAgainEmitter
    */
   playAgain() {
-    this.playAgainEmitter.emit(true);
+    this.playAgainEvent.emit(true);
   }
 
   /**
    * Calling this method indicates that the user wants to return to the starting page via the playAgainEmitter
    */
   backToHome() {
-    this.playAgainEmitter.emit(false);
+    this.playAgainEvent.emit(false);
   }
 }
