@@ -1,6 +1,6 @@
-import {GameControl} from './game-control';
+import {GameResult} from './game-result';
 
 export interface ServerMove {
   moveId: string;
-  hasPlayerWon: boolean;
+  result: GameResult;
 }

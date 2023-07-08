@@ -6,6 +6,7 @@ import {GameControlComponent} from '../game-control/game-control.component';
 import {GameControlSwitchComponent} from '../game-control-switch/game-control-switch.component';
 import {ServerMove} from '../../shared/server-move';
 import {Router} from '@angular/router';
+import {GameResult} from '../../shared/game-result';
 
 @Component({
   selector: 'rps-game',
@@ -35,9 +36,14 @@ export class GameComponent {
       return;
     }
     this.serverControlComponent.reveal(serverControl);
-    setTimeout(() => {
-      this.reviewComponent.show(userMove, serverControl, serverMove.hasPlayerWon);
-    }, 1000);
+
+    if (serverMove.result === GameResult.TIE) {
+      this.resetGame();
+    } else {
+      setTimeout(() => {
+        this.reviewComponent.show(userMove, serverControl, serverMove.result === GameResult.WIN);
+      }, 1000);
+    }
   }
 
   /**
@@ -70,7 +76,19 @@ export class GameComponent {
     //@TODO: Enable ties => On tie immediately reset game
     return {
       moveId: 'scissors',
-      hasPlayerWon: userMove.id === 'rock'
+      result: (function (): GameResult {
+
+        switch (userMove.id) {
+          case 'scissors':
+            return GameResult.TIE;
+          case 'rock':
+            return GameResult.WIN;
+          case 'paper':
+            return GameResult.LOSS;
+          default:
+            return GameResult.LOSS;
+        }
+      })()
     };
   }
 
