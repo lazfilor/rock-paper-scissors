@@ -7,6 +7,7 @@ import {GameControlSwitchComponent} from '../game-control-switch/game-control-sw
 import {ServerMove} from '../../shared/server-move';
 import {Router} from '@angular/router';
 import {GameResult} from '../../shared/game-result';
+import {MoveId} from '../../shared/move-id';
 
 @Component({
   selector: 'rps-game',
@@ -75,7 +76,7 @@ export class GameComponent {
     //@TODO: Fetch data from server, incl. error
     //@TODO: Enable ties => On tie immediately reset game
     return {
-      moveId: 'scissors',
+      moveId: MoveId.SCISSORS,
       result: (function (): GameResult {
 
         switch (userMove.id) {

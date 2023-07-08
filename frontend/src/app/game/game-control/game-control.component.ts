@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GameControl} from '../../shared/game-control';
+import {MoveId} from '../../shared/move-id';
 
 @Component({
   selector: 'rps-game-control',
@@ -9,7 +10,7 @@ import {GameControl} from '../../shared/game-control';
 export class GameControlComponent implements OnInit{
 
   @Input()
-  controlData: GameControl = {id: 'hidden', name: 'Hidden', assetPath: ''};
+  controlData: GameControl = {id: MoveId.HIDDEN, name: 'Hidden', assetPath: ''};
 
   @Input()
   isSelected = false;

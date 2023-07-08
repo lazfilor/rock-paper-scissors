@@ -1,4 +1,5 @@
 import {GameControl} from './game-control';
+import {MoveId} from './move-id';
 
 interface GameConfiguration {
   controls: GameControl[]
@@ -7,17 +8,17 @@ interface GameConfiguration {
 export const gameConfiguration: GameConfiguration = {
   controls: [
     {
-      id: 'rock',
+      id: MoveId.ROCK,
       name: 'Rock',
       assetPath: '/controls/rock.svg'
     },
     {
-      id: 'paper',
+      id: MoveId.PAPER,
       name: 'Paper',
       assetPath: '/controls/paper.svg'
     },
     {
-      id: 'scissors',
+      id: MoveId.SCISSORS,
       name: 'Scissors',
       assetPath: '/controls/scissors.svg'
     }
