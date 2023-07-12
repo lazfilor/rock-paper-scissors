@@ -2,6 +2,7 @@
   <div class="rps-game-review-modal__content-area">
     <h4 *ngIf="hasPlayerWon !== undefined">{{ hasPlayerWon ? 'You Won!' : 'You Lost!' }}</h4>
     <h5 *ngIf="serverMove && playerMove">{{playerMove.name}} vs. {{serverMove.name}}</h5>
+    <p *ngIf="reviewText$ | async as reviewText">{{reviewText}}</p>
     <div class="rps-game-review-modal__user-action">
       <a (click)="playAgain()" class="waves-effect waves-light deep-orange accent-3 btn">Play again</a>
       <a (click)="backToHome()" class="waves-effect waves-light deep-orange accent-3 btn">Back to home</a>

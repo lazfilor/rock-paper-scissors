@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {GameControl} from '../../shared/game-control';
+import {catchError, Observable, of} from 'rxjs';
+import {GameService} from '../game.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'rps-game-review-modal',
@@ -18,6 +21,11 @@ export class GameReviewModalComponent {
 
   hasPlayerWon?: boolean;
 
+  reviewText$?: Observable<string>;
+
+  constructor(private gameService: GameService, private router: Router) {
+  }
+
   /**
    * Calling this method displays a modal including the respective data
    * @param playerMove the user's move's data
@@ -29,6 +37,12 @@ export class GameReviewModalComponent {
     this.serverMove = serverMove;
     this.hasPlayerWon = hasPlayerWon;
     this.isVisible = true;
+    this.reviewText$ = this.gameService.getReview(playerMove.id, serverMove.id).pipe(
+      catchError(err => {
+        console.error("Unable to retrieve review", err);
+        return of();
+      })
+    );
   }
 
   /**
@@ -39,6 +53,7 @@ export class GameReviewModalComponent {
     this.playerMove = undefined;
     this.serverMove = undefined;
     this.hasPlayerWon = undefined;
+    this.reviewText$ = undefined;
   }
 
   /**

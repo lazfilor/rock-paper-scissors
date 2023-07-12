@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {MoveId} from '../shared/move-id';
-import {ReviewResponse} from './models/review-response';
+import {ReviewResponse} from '../shared/review-response';
 import {ServerMove} from '../shared/server-move';
 
 @Injectable({
@@ -39,7 +39,12 @@ export class GameService {
     const params = {[GameService.USER_MOVE_PARAM]: userMove, [GameService.SERVER_MOVE_PARAM]: serverMove};
 
     return this.httpClient.get<ReviewResponse>(`${this.apiUrl}/${GameService.REVIEW_ENDPOINT}`, {params: params}).pipe(
-      map(resp => resp.test)
+      map(resp => {
+        if (!resp.text) {
+          throw new Error("Empty review text");
+        }
+        return resp.text;
+      })
     );
   }
 }
