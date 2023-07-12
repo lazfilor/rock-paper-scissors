@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {MoveId} from '../shared/move-id';
 import {ReviewResponse} from '../shared/review-response';
 import {ServerMove} from '../shared/server-move';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class GameService {
   public static readonly SERVER_MOVE_PARAM: string = 'serverMove';
 
 
-  private apiUrl: string = 'http://localhost:8080/api';
+  private apiUrl: string = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) { }
 
