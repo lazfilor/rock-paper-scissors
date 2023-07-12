@@ -3,7 +3,7 @@
   <div class="rps-game-control__inner">
     <div class="rps-game-control__front-slide">
       <div class="rps-game-control__icon-box">
-        <img *ngIf="controlData?.assetPath" class="rps-game-control__icon" [ngSrc]="'assets' + controlData.assetPath" width="800" height="800" [alt]="controlData.id">
+        <img *ngIf="controlData?.assetPath" class="rps-game-control__icon" [src]="'assets' + controlData.assetPath" width="800" height="800" [alt]="controlData.id">
       </div>
       <h3 class="rps-game-control__text">{{controlData.name}}</h3>
 

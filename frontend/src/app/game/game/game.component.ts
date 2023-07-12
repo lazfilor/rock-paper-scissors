@@ -7,7 +7,7 @@ import {GameControlSwitchComponent} from '../game-control-switch/game-control-sw
 import {ServerMove} from '../../shared/server-move';
 import {Router} from '@angular/router';
 import {GameResult} from '../../shared/game-result';
-import {MoveId} from '../../shared/move-id';
+import {GameService} from '../game.service';
 
 @Component({
   selector: 'rps-game',
@@ -22,29 +22,21 @@ export class GameComponent {
 
   @ViewChild('controlSwitch') switchComponent!: GameControlSwitchComponent;
 
-  constructor(private router: Router ) {}
+  constructor(private router: Router, private gameService: GameService) {}
 
   /**
    * Method represents entrypoint for a game round, triggered by the user's control selection
    * @param userMove the control selected by a user
    */
   handleSwitchSelection(userMove: GameControl) {
-    const serverMove = this.getServerMove(userMove);
-    const serverControl = this.findControlForServerMove(serverMove);
-
-    if (serverControl == null) {
-      //@TODO: Error page
-      return;
-    }
-    this.serverControlComponent.reveal(serverControl);
-
-    if (serverMove.result === GameResult.TIE) {
-      this.resetGame();
-    } else {
-      setTimeout(() => {
-        this.reviewComponent.show(userMove, serverControl, serverMove.result === GameResult.WIN);
-      }, 1000);
-    }
+    this.gameService.getServerMove(userMove.id)
+      .subscribe({
+        next: response => this.handleServerMove(userMove, response),
+        error: err => {
+          console.error(err);
+          this.router.navigate(['error', 'server']).catch(console.error);
+        }
+      });
   }
 
   /**
@@ -56,7 +48,7 @@ export class GameComponent {
     if (userWantsRematch) {
       this.resetGame();
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['']).catch(console.error);
     }
   }
 
@@ -71,31 +63,26 @@ export class GameComponent {
     }, 500);
   }
 
-  //@TODO: Move into service
-  getServerMove(userMove: GameControl): ServerMove {
-    //@TODO: Fetch data from server, incl. error
-    //@TODO: Enable ties => On tie immediately reset game
-    return {
-      moveId: MoveId.SCISSORS,
-      result: (function (): GameResult {
+  handleServerMove(userMove: GameControl, serverMove: ServerMove) {
+    const serverControl = this.findControlForServerMove(serverMove);
 
-        switch (userMove.id) {
-          case 'scissors':
-            return GameResult.TIE;
-          case 'rock':
-            return GameResult.WIN;
-          case 'paper':
-            return GameResult.LOSS;
-          default:
-            return GameResult.LOSS;
-        }
-      })()
-    };
+    if (serverControl == null) {
+      this.router.navigate(['error', 'default']).catch(console.error);
+      return;
+    }
+    this.serverControlComponent.reveal(serverControl);
+
+    if (serverMove.result === GameResult.TIE) {
+      this.resetGame();
+    } else {
+      setTimeout(() => {
+        this.reviewComponent.show(userMove, serverControl, serverMove.result === GameResult.WIN);
+      }, 1000);
+    }
   }
 
-  //@TODO: Move into service
   findControlForServerMove(serverMove: ServerMove): GameControl | null {
-    const controlMatch: GameControl[] = gameConfiguration.controls.filter(control => control.id === serverMove.moveId);
+    const controlMatch: GameControl[] = gameConfiguration.controls.filter(control => control.id === serverMove.move);
     return controlMatch.length === 1 ? controlMatch[0] : null;
   }
 }

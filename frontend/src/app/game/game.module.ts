@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import { GameControlComponent } from './game-control/game-control.component';
 import { GameComponent } from './game/game.component';
 import { GameControlSwitchComponent } from './game-control-switch/game-control-switch.component';
@@ -17,8 +17,7 @@ import { GameReviewModalComponent } from './game-review-modal/game-review-modal.
   ],
   imports: [
     CommonModule,
-    GameRoutingModule,
-    NgOptimizedImage
+    GameRoutingModule
   ]
 })
 export class GameModule { }

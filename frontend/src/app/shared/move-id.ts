@@ -1,6 +1,6 @@
 export enum MoveId {
-  HIDDEN = 'hidden',
-  ROCK = 'rock',
-  PAPER = 'paper',
-  SCISSORS = 'scissors'
+  HIDDEN = 'HIDDEN',
+  ROCK = 'ROCK',
+  PAPER = 'PAPER',
+  SCISSORS = 'SCISSORS'
 }

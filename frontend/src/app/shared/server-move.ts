@@ -2,6 +2,6 @@ import {GameResult} from './game-result';
 import {MoveId} from './move-id';
 
 export interface ServerMove {
-  moveId: MoveId;
+  move: MoveId;
   result: GameResult;
 }
