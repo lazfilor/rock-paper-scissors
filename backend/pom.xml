@@ -12,6 +12,11 @@
 
     <artifactId>rps-backend</artifactId>
 
+    <properties>
+        <!-- overwrite via settings in case different arch required -->
+        <rps.base.arch>arm64</rps.base.arch>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,6 +78,12 @@
                         <configuration>
                             <from>
                                 <image>gcr.io/distroless/java17-debian11</image>
+                                <platforms>
+                                    <platform>
+                                        <architecture>${rps.base.arch}</architecture>
+                                        <os>linux</os>
+                                    </platform>
+                                </platforms>
                             </from>
                             <to>
                                 <image>filor.com/rps-backend</image>
