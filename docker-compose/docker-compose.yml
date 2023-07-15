@@ -1,0 +1,78 @@
+
+services:
+
+  traefik:
+    image: "traefik:v3.0"
+    container_name: "reverse-proxy"
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      #- "--entrypoints.websecure.address=:443"
+#      - "--certificatesresolvers.rpsresolver.acme.httpchallenge=true"
+#      - "--certificatesresolvers.rpsresolver.acme.httpchallenge.entrypoint=web"
+#      - "--certificatesresolvers.rpsresolver.acme.email=lafilor@icloud.com"
+#      - "--certificatesresolvers.rpsresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      #- "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  backend:
+    image: "filor.com/rps-backend"
+    container_name: "rps-backend"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`${APP_URL}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+      #- "traefik.http.routers.backend.tls.certresolver=rpsresolver"
+    environment:
+      RPS_REVIEW_API_URL: https://api.openai.com/v1/completions
+
+  frontend:
+    image: "filor.com/rps-frontend"
+    container_name: "rps-frontend"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${APP_URL}`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      #- "traefik.http.routers.frontend.tls.certresolver=rpsresolver"
+
+  prometheus:
+    image: "prom/prometheus"
+    container_name: "prometheus"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.size=256MB"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`${PROM_URL}`)"
+      - "traefik.http.routers.prometheus.entrypoints=web"
+      - "traefik.http.routers.prometheus.service=prometheus"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "prometheus:/prometheus"
+
+  grafana:
+    image: "grafana/grafana"
+    container_name: "grafana"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_URL}`)"
+      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    volumes:
+      - "./grafana/provisioning/:/etc/grafana/provisioning/"
+      - "grafana:/var/lib/grafana"
+
+volumes:
+  grafana:
+  prometheus:
