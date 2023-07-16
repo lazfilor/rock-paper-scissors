@@ -3,12 +3,15 @@ package com.filor.rps.configuration;
 import com.filor.rps.services.LocalReviewProvider;
 import com.filor.rps.services.RemoteReviewProvider;
 import com.filor.rps.services.ReviewProvider;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -20,6 +23,7 @@ import java.time.Duration;
 
 @Slf4j
 @Configuration
+@Import({CompositeMeterRegistry.class})
 @EnableConfigurationProperties({ReviewConfigurationProps.class})
 public class RpsConfiguration {
 

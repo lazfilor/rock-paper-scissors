@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+/**
+ * Handler represents entrypoint for web-clients regarding reviews for certain plays that occurred
+ */
 @Slf4j
 @RequestMapping("/review")
 @RestController
