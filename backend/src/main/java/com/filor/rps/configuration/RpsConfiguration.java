@@ -3,8 +3,9 @@ package com.filor.rps.configuration;
 import com.filor.rps.services.LocalReviewProvider;
 import com.filor.rps.services.RemoteReviewProvider;
 import com.filor.rps.services.ReviewProvider;
-import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -53,5 +54,16 @@ public class RpsConfiguration {
     public ReviewProvider remoteReviewProvider(WebClient openAiClient) {
         log.info("Using {} for providing reviews", RemoteReviewProvider.class);
         return new RemoteReviewProvider(openAiClient);
+    }
+
+    @Bean
+    public OpenAPI rpsOpenAPI() {
+        return new OpenAPI()
+                .info(
+                        new Info()
+                                .title("RPS API")
+                                .description("Rock-Paper-Scissors game backend application")
+                                .version("v1.0")
+                );
     }
 }

@@ -15,6 +15,7 @@
     <properties>
         <!-- overwrite via settings in case different arch required -->
         <rps.base.arch>arm64</rps.base.arch>
+        <open-api.version>2.1.0</open-api.version>
     </properties>
 
     <dependencies>
@@ -44,6 +45,11 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>${open-api.version}</version>
         </dependency>
     </dependencies>
 
