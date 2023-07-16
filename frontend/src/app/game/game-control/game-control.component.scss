@@ -79,6 +79,10 @@
     font-family: 'Material Icons';
     font-size: 9rem;
     color: map-get($blue, "lighten-2");
+
+    @media #{$small-and-down} {
+      font-size: 5rem;
+    }
   }
 }
 
@@ -99,4 +103,11 @@
   left: 10%;
   width: 80%;
   height: 80%;
+}
+
+.rps-game-control__text {
+
+  @media #{$small-and-down} {
+    font-size: 1.7rem;
+  }
 }
