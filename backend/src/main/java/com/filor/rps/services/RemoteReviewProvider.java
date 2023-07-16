@@ -2,6 +2,7 @@ package com.filor.rps.services;
 
 import com.filor.rps.model.Move;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,8 @@ public class RemoteReviewProvider extends ReviewProvider {
     public static final String OPENAI_ROAST_PROMPT = "Roast a player that lost a game of rock-paper-scissors using %s against %s in one sentence.";
 
     public static final String OPENAI_CONGRATS_PROMPT = "Jokingly congratulate a player that won a game of rock-paper-scissors using %s against %s in one sentence.";
+
+    public static final String CLEANSE_EXPRESSION = "\"|'|\\n";
 
     private final WebClient webClient;
 
@@ -70,10 +73,15 @@ public class RemoteReviewProvider extends ReviewProvider {
             log.error("OpenAPI response did not contain response text");
             return Mono.error(e);
         }
-        return Mono.just(responseText);
+        return Mono.just(cleanseReturnString(responseText));
     }
+
     String formatOpenAiPrompt(String prompt, Move userMove, Move serverMove) {
         return String.format(prompt, userMove.toString().toLowerCase(Locale.ROOT), serverMove.toString().toLowerCase(Locale.ROOT));
+    }
+
+    String cleanseReturnString(@NonNull String uncleansedString) {
+        return uncleansedString.replaceAll(CLEANSE_EXPRESSION, "");
     }
 
     @Data

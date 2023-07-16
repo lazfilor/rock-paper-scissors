@@ -16,6 +16,7 @@
         <!-- overwrite via settings in case different arch required -->
         <rps.base.arch>arm64</rps.base.arch>
         <open-api.version>2.1.0</open-api.version>
+        <spock.version>2.3-groovy-4.0</spock.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,16 @@
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
             <version>${open-api.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-spring</artifactId>
+            <version>${spock.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -66,6 +77,18 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
