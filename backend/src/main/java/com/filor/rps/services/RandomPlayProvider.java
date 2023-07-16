@@ -15,7 +15,7 @@ public class RandomPlayProvider implements PlayProvider {
     @Override
     public Play getPlay(Move playerMove) {
         Move[] moves = Move.values();
-        Move randomMove = moves[ThreadLocalRandom.current().nextInt(0, moves.length)];
-        return new Play(randomMove, playerMove.getResult(randomMove));
+        Move serverMove = moves[ThreadLocalRandom.current().nextInt(0, moves.length)];
+        return new Play(playerMove, serverMove, playerMove.getResult(serverMove));
     }
 }

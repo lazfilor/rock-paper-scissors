@@ -5,6 +5,7 @@ import {MoveId} from '../shared/move-id';
 import {ReviewResponse} from '../shared/review-response';
 import {ServerMove} from '../shared/server-move';
 import {environment} from '../../environments/environment';
+import {PlayResponse} from "../shared/play-response";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,14 @@ export class GameService {
     if (userMove === null || userMove === MoveId.HIDDEN) {
       return throwError(() => new Error("Can not get server play for hidden move"));
     }
-    return this.httpClient.get<ServerMove>(`${this.apiUrl}/${GameService.PLAY_ENDPOINT}/${userMove}`);
+    return this.httpClient.get<PlayResponse>(`${this.apiUrl}/${GameService.PLAY_ENDPOINT}/${userMove}`).pipe(
+      map(resp => {
+        if (!resp.serverMove || !resp.result) {
+          throw new Error("Empty play values");
+        }
+        return {result: resp.result, move: resp.serverMove};
+      })
+    );
   }
 
   getReview(userMove: MoveId, serverMove: MoveId): Observable<string> {
