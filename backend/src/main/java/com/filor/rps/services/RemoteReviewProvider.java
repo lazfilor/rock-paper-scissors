@@ -32,18 +32,18 @@ public class RemoteReviewProvider extends ReviewProvider {
 
     @Override
     protected Mono<String> getRoast(Move userMove, Move serverMove) {
-        return queryOpenApi(formatOpenAiPrompt(OPENAI_ROAST_PROMPT, userMove, serverMove))
+        return queryOpenAi(formatOpenAiPrompt(OPENAI_ROAST_PROMPT, userMove, serverMove))
                 .flatMap(this::getTextFromResponse);
 
     }
 
     @Override
     protected Mono<String> getCongratulations(Move userMove, Move serverMove) {
-        return queryOpenApi(formatOpenAiPrompt(OPENAI_CONGRATS_PROMPT, userMove, serverMove))
+        return queryOpenAi(formatOpenAiPrompt(OPENAI_CONGRATS_PROMPT, userMove, serverMove))
                 .flatMap(this::getTextFromResponse);
     }
 
-    Mono<OpenApiResponse> queryOpenApi(String prompt) {
+    Mono<OpenApiResponse> queryOpenAi(String prompt) {
         return webClient.post()
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(createOpenAiRequest(prompt))
@@ -51,7 +51,7 @@ public class RemoteReviewProvider extends ReviewProvider {
                     if (response.statusCode().equals(HttpStatus.OK)) {
                         return response.bodyToMono(OpenApiResponse.class);
                     } else {
-                        log.error("Unable to query OpenApi, received status {}", response.statusCode());
+                        log.error("Unable to query OpenAi, received status {}", response.statusCode());
                         return response.createError();
                     }
                 });

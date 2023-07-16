@@ -33,6 +33,7 @@ services:
       #- "traefik.http.routers.backend.tls.certresolver=rpsresolver"
     environment:
       RPS_REVIEW_API_URL: https://api.openai.com/v1/completions
+      RPS_REVIEW_API_TOKEN: ${RPS_OPEN_AI_TOKEN}
 
   frontend:
     image: "filor.com/rps-frontend"
