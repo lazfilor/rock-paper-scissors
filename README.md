@@ -46,9 +46,9 @@ As this deployment is only meant for development purposes, the http traffic is n
 
 #### Backend
 
-| name              | type   | default | description                                                                                                                                                                                                                                                                                          |
-|-------------------|--------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| RPS_OPEN_AI_TOKEN | String | -       | The backend uses open-api to generate server reactions (called reviews) to previous plays. If you want this feature to work, you need to generate a respective token [here](https://platform.openai.com/account/api-keys) and, for development purposes, add its value to this environment variable. |
+| name              | type   | default | description                                                                                                                                                                                                                                                                                         |
+|-------------------|--------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RPS_OPEN_AI_TOKEN | String | -       | The backend uses open-ai to generate server reactions (called reviews) to previous plays. If you want this feature to work, you need to generate a respective token [here](https://platform.openai.com/account/api-keys) and, for development purposes, add its value to this environment variable. |
 
 
 
