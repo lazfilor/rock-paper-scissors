@@ -1,10 +1,71 @@
 package com.filor.rps.services
 
+import com.filor.rps.model.Move
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.WebClientResponseException
+import spock.lang.Shared
 import spock.lang.Specification
 
 class RemoteReviewProviderTest extends Specification {
 
-    def remoteReviewProvider = new RemoteReviewProvider(null);
+    @Shared
+    def mockWebServer = new MockWebServer()
+    def remoteReviewProvider = new RemoteReviewProvider(WebClient.create(mockWebServer.url("/").toString()))
+
+    def setupSpec() {
+        mockWebServer.start();
+    }
+
+    def cleanupSpec() {
+        mockWebServer.shutdown();
+    }
+
+    def "should receive non-empty roast when request successful"() {
+        setup:
+        mockWebServer.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .setBody("{\"choices\": [{\"text\": \"A roast\"}]}"))
+        expect:
+        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block() == "A roast"
+    }
+
+    def "should receive non-empty congrats when request successful"() {
+        setup:
+        mockWebServer.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .setBody("{\"choices\": [{\"text\": \"A congrats\"}]}"))
+        expect:
+        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block() == "A congrats"
+    }
+
+    def "should receive error when request unsuccessful"() {
+        setup:
+        mockWebServer.enqueue(new MockResponse()
+                .setResponseCode(404)
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+        when:
+        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block()
+        then:
+        thrown(WebClientResponseException)
+    }
+
+    def "should receive error when empty response"() {
+        setup:
+        mockWebServer.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .setBody("{\"choices\": [{\"text\": \"\"}]}"))
+        when:
+        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block()
+        then:
+        thrown(IllegalStateException)
+    }
 
     def "Should cleanse return string correctly"() {
         expect:
