@@ -12,16 +12,16 @@ import reactor.core.publisher.Mono;
 public abstract class ReviewProvider {
 
     /**
-     * Returns a review for the provided game configuration
+     * Returns a review for the provided game configuration in case the configuration did not result in a tie
      * @param userMove the user's move
      * @param serverMove the server's move
-     * @return a review
+     * @return a review, may contain an error in case the review can either not be fetched or the moves resulted in a tie
      */
     public Mono<String> getReview(@NonNull Move userMove, @NonNull Move serverMove) {
         Result result = userMove.getResult(serverMove);
 
         if (Result.TIE.equals(result)) {
-            return Mono.empty();
+            return Mono.error(new IllegalArgumentException("Ties can not be reviewed"));
         }
         return Result.WIN.equals(result) ? getCongratulations(userMove, serverMove) : getRoast(userMove, serverMove);
     }

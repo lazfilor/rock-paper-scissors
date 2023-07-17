@@ -7,12 +7,15 @@ class LocalReviewProviderTest extends Specification {
 
     def provider = new LocalReviewProvider();
 
-    def "Returns non-empty roast"() {
-        expect:
-        provider.getRoast(Move.PAPER, Move.SCISSORS).block().length() > 0
+    def "Throws if moves are tied"() {
+        when:
+        provider.getReview(Move.PAPER, Move.PAPER).block()
+        then:
+        thrown(IllegalArgumentException)
     }
 
-    def "Returns non-empty congrats"() {
-        provider.getRoast(Move.PAPER, Move.ROCK).block().length() > 0
+    def "Returns non-empty review"() {
+        expect:
+        provider.getReview(Move.PAPER, Move.SCISSORS).block().length() > 0
     }
 }

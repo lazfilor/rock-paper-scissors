@@ -24,24 +24,14 @@ class RemoteReviewProviderTest extends Specification {
         mockWebServer.shutdown();
     }
 
-    def "should receive non-empty roast when request successful"() {
-        setup:
-        mockWebServer.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                .setBody("{\"choices\": [{\"text\": \"A roast\"}]}"))
-        expect:
-        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block() == "A roast"
-    }
-
-    def "should receive non-empty congrats when request successful"() {
+    def "should receive non-empty review when request successful"() {
         setup:
         mockWebServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                 .setBody("{\"choices\": [{\"text\": \"A congrats\"}]}"))
         expect:
-        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block() == "A congrats"
+        remoteReviewProvider.getReview(Move.PAPER, Move.SCISSORS).block() == "A congrats"
     }
 
     def "should receive error when request unsuccessful"() {
@@ -50,7 +40,7 @@ class RemoteReviewProviderTest extends Specification {
                 .setResponseCode(404)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
         when:
-        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block()
+        remoteReviewProvider.getReview(Move.PAPER, Move.SCISSORS).block()
         then:
         thrown(WebClientResponseException)
     }
@@ -62,9 +52,21 @@ class RemoteReviewProviderTest extends Specification {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                 .setBody("{\"choices\": [{\"text\": \"\"}]}"))
         when:
-        remoteReviewProvider.getRoast(Move.PAPER, Move.SCISSORS).block()
+        remoteReviewProvider.getReview(Move.PAPER, Move.SCISSORS).block()
         then:
         thrown(IllegalStateException)
+    }
+
+    def "should receive error when tied moves provided"() {
+        setup:
+        mockWebServer.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .setBody("{\"choices\": [{\"text\": \"Ein Text\"}]}"))
+        when:
+        remoteReviewProvider.getReview(Move.PAPER, Move.PAPER).block()
+        then:
+        thrown(IllegalArgumentException)
     }
 
     def "Should cleanse return string correctly"() {
