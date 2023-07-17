@@ -34,13 +34,21 @@ After having built both apps as an image, you can deploy the whole rps applicati
 Apart from the backend and frontend, this process will pull images for grafana and prometheus for metrics as well as traefik for reverse-proxying traffic.
 As this deployment is only meant for development purposes, the http traffic is not secured and all admin routes can be accessed without credentials (except grafana, which uses admin/admin by default).
 
-Accessible routes (using port 80 if not otherwise indicated):
+### Accessible routes (using port 80 if not otherwise indicated):
 
 1. localhost Entrypoint for the actual app
 2. localhost/api/swagger-ui.html Entrypoint for swagger/open-ai docs
 3. prom.localhost Prometheus admin-panel
 4. grafana.localhost Grafana admin panel (use admin/admin when asked for creds)
 5. localhost:8080 Traefik admin panel
+
+### Required Environment-Variables
+
+#### Backend
+
+| name              | type   | default | description                                                                                                                                                                                                                                                                                          |
+|-------------------|--------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RPS_OPEN_AI_TOKEN | String | -       | The backend uses open-api to generate server reactions (called reviews) to previous plays. If you want this feature to work, you need to generate a respective token [here](https://platform.openai.com/account/api-keys) and, for development purposes, add its value to this environment variable. |
 
 
 
